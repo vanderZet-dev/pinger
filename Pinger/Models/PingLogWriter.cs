@@ -15,7 +15,7 @@ namespace Pinger.Models
             Directory.CreateDirectory(directory);
             string fileName = pingerAddress?.GetSaveLogName();
 
-            Regex regex = new Regex(@"[.:/]");
+            Regex regex = new Regex(@"[.:]|/{1,2}");
             fileName = regex.Replace(fileName, "_");
 
             string savePath = directory + "/" + fileName + ".txt";

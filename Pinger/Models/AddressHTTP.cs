@@ -24,7 +24,7 @@ namespace Pinger.Models
 
         public override string GetSaveLogName()
         {
-            return _prefix + base.GetSaveLogName();
+            return GetEndPoint();
         }
 
         public int GetValidStatusCode()
@@ -34,7 +34,7 @@ namespace Pinger.Models
 
         public override string GetSaveLogData()
         {
-            return GetDateTimeLog() + " " + _prefix + BaseAddress + " " + GetLastState().ToUpper();
+            return GetDateTimeLog() + " " + GetEndPoint() + " " + GetLastState().ToUpper();
         }
     }
 }
