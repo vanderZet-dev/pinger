@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using Pinger.Interfaces;
 using Pinger.Models.Enums;
@@ -7,7 +8,7 @@ using Pinger.Models.Enums;
 namespace Pinger.Models
 {
     [Serializable]
-    public abstract class AddressTemplate : IPingerAddress
+    public abstract class AddressTemplate : IPingerAddress, IPingerLogSaveble
     {
         protected string BaseAddress;
         protected PingResultState LastState = PingResultState.NotChecked;
@@ -56,12 +57,27 @@ namespace Pinger.Models
 
         public int GetCheckInterval()
         {
-            return CheckInterval;
+            return CheckInterval*1000;
         }
 
         public string GetProtocol()
         {
             return  MyProtocolType.ToString();
+        }
+
+        public virtual string GetSaveLogName()
+        {
+            return $"{BaseAddress}";
+        }
+
+        public virtual string GetSaveLogData()
+        {
+           return GetDateTimeLog() + " " + BaseAddress + " " + GetLastState().ToUpper();
+        }
+
+        protected string GetDateTimeLog()
+        {
+            return DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
         }
     }
 }

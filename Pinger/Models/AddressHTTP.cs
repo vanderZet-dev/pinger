@@ -1,21 +1,40 @@
 ﻿using System;
+using System.Globalization;
+using Pinger.Interfaces;
 using Pinger.Models.Enums;
 
 namespace Pinger.Models
 {
     [Serializable]
-    public class AddressHTTP : AddressTemplate
+    public class AddressHTTP : AddressTemplate, IPingerAdressWithValidation
     {
-        public string Prefix;
+        private string _prefix;
+        private int _validStatusCode;
 
-        public AddressHTTP(string baseAddress, MyProtocolType myProtocolType, int checkInterval, string prefix) : base(baseAddress, myProtocolType, checkInterval)
+        public AddressHTTP(string baseAddress, MyProtocolType myProtocolType, int checkInterval, string prefix, int validStatusCode) : base(baseAddress, myProtocolType, checkInterval)
         {
-            Prefix = prefix;
+            _prefix = prefix;
+            _validStatusCode = validStatusCode;
         }
         
         public override dynamic GetEndPoint()
         {
-            return Prefix + "://" + base.GetEndPoint();
+            return _prefix + "://" + base.GetEndPoint();
+        }
+
+        public override string GetSaveLogName()
+        {
+            return _prefix + base.GetSaveLogName();
+        }
+
+        public int GetValidStatusCode()
+        {
+            return _validStatusCode;
+        }
+
+        public override string GetSaveLogData()
+        {
+            return GetDateTimeLog() + " " + _prefix + BaseAddress + " " + GetLastState().ToUpper();
         }
     }
 }

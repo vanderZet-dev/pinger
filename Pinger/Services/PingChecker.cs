@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Pinger.Interfaces;
 using Pinger.Models;
 
 namespace Pinger.Services
@@ -13,7 +14,9 @@ namespace Pinger.Services
         private PingerHTTP _pingerHttp = new PingerHTTP();
         private PingerICMP _pingerIcmp = new PingerICMP();
         private PingerTCP _pingerTcp = new PingerTCP();
-        
+
+        private PingLogWriter _pingLogWriter = new PingLogWriter();
+
         public void LoadSettings()
         {
             _pingerSettings.LoadSettings();
@@ -27,20 +30,24 @@ namespace Pinger.Services
             {
                 tasks.Add(new Task(() =>
                 {
-                    switch (address.GetType().Name)
+                    while (true)
                     {
-                        case "AddressHTTP":
-                            _pingerHttp.CheckConnection(address);
-                            break;
-                        case "AddressICMP":
-                            _pingerIcmp.CheckConnection(address);
-                            break;
-                        case "AddressTCP":
-                            _pingerTcp.CheckConnection(address);
-                            Thread.Sleep(5000);
-                            break;
+                        switch (address.GetProtocol())
+                        {
+                            case "Http":
+                                _pingerHttp.CheckConnection(address);
+                                break;
+                            case "Icmp":
+                                _pingerIcmp.CheckConnection(address);
+                                break;
+                            case "Tcp":
+                                _pingerTcp.CheckConnection(address);
+                                break;
+                        }
+                        Console.WriteLine(((IPingerLogSaveble)address).GetSaveLogData());
+                        _pingLogWriter.SaveLog(address as IPingerLogSaveble);
+                        Thread.Sleep(address.GetCheckInterval());
                     }
-                    Console.WriteLine(address);
                 }));
             }
 
@@ -48,8 +55,6 @@ namespace Pinger.Services
             {
                 task.Start();
             }
-
-            Task.WaitAll(tasks.ToArray());
         }
     }
 }
