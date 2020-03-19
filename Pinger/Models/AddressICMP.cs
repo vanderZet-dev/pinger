@@ -45,6 +45,8 @@ namespace Pinger.Models
                 SetLastState(PingResultState.Failed);
                 SetMessage(ex.Message);
             }
+
+            Console.WriteLine(this);
         }
     }
 }

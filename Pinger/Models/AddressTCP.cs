@@ -59,6 +59,7 @@ namespace Pinger.Models
                     SetMessage(ex.Message);
                 }
             }
+            Console.WriteLine(this);
         }
     }
 }

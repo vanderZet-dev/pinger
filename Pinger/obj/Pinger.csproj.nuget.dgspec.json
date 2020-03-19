@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VS\\projects\\Pinger\\Pinger\\Pinger\\Pinger.csproj": {}
+    "D:\\VS\\projects\\PingerRepo\\pinger\\Pinger\\Pinger.csproj": {}
   },
   "projects": {
-    "D:\\VS\\projects\\Pinger\\Pinger\\Pinger\\Pinger.csproj": {
+    "D:\\VS\\projects\\PingerRepo\\pinger\\Pinger\\Pinger.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VS\\projects\\Pinger\\Pinger\\Pinger\\Pinger.csproj",
+        "projectUniqueName": "D:\\VS\\projects\\PingerRepo\\pinger\\Pinger\\Pinger.csproj",
         "projectName": "Pinger",
-        "projectPath": "D:\\VS\\projects\\Pinger\\Pinger\\Pinger\\Pinger.csproj",
+        "projectPath": "D:\\VS\\projects\\PingerRepo\\pinger\\Pinger\\Pinger.csproj",
         "packagesPath": "C:\\Users\\meneger\\.nuget\\packages\\",
-        "outputPath": "D:\\VS\\projects\\Pinger\\Pinger\\Pinger\\obj\\",
+        "outputPath": "D:\\VS\\projects\\PingerRepo\\pinger\\Pinger\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\ProgramData\\Xamarin\\NuGet\\",
