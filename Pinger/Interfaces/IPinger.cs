@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pinger
+namespace Pinger.Interfaces
 {
     interface IPinger
     {
-        void CheckConnection();
+        void CheckConnection(IPingerAddress pingerAddress);
     }
 }

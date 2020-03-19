@@ -1,65 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using Pinger.Exceptions;
 using Pinger.Models.Enums;
 
 namespace Pinger.Models
 {
     [Serializable]
-    public class AddressTCP : AddressTemplate, IPinger
+    public class AddressTCP : AddressTemplate
     {
         public string Port;
-        
 
-        public AddressTCP(string baseAddress, string port) : base(baseAddress)
+        public AddressTCP(string baseAddress, MyProtocolType myProtocolType, int checkInterval, string port) : base(baseAddress, myProtocolType, checkInterval)
         {
             Port = port;
         }
         
-        public override string GetEndPoint()
+        public override dynamic GetEndPoint()
         {
-            return base.GetEndPoint() + ":" + Port;
+            return new IPEndPoint(IPAddress.Parse(BaseAddress), Convert.ToInt32(Port));
         }
-
-        public void CheckConnection()
-        {
-            IPEndPoint ipPoint = new IPEndPoint(IPAddress.Parse(BaseAddress), Convert.ToInt32(Port));
-            using (var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
-            {
-                try
-                {
-                    sock.Connect(ipPoint);
-
-                    if (!sock.Connected)
-                    {
-                        throw new ConnectionFailedException();
-                    }
-                    SetLastState(PingResultState.Ok);
-                }
-                catch (FormatException ex)
-                {
-                    SetLastState(PingResultState.Failed);
-                    SetMessage(ex.Message);
-                }
-                catch (ConnectionFailedException ex)
-                {
-                    SetLastState(PingResultState.Failed);
-                    SetMessage(ex.Message);
-                }
-                catch (SocketException ex)
-                {
-                    SetLastState(PingResultState.Failed);
-                    SetMessage(ex.Message);
-                }
-            }
-            Console.WriteLine(this);
-        }
+        
     }
 }

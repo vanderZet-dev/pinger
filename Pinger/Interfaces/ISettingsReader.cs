@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pinger
+namespace Pinger.Interfaces
 {
     public interface ISettingsReader<T>
     {

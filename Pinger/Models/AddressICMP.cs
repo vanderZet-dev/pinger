@@ -7,46 +7,12 @@ using Pinger.Models.Enums;
 namespace Pinger.Models
 {
     [Serializable]
-    public class AddressICMP : AddressTemplate, IPinger
+    public class AddressICMP : AddressTemplate
     {
         
-        public AddressICMP(string baseAddress) :base(baseAddress)
+        public AddressICMP(string baseAddress, MyProtocolType myProtocolType, int checkInterval) : base(baseAddress, myProtocolType, checkInterval)
         {
 
-        }
-
-        public void CheckConnection()
-        {
-            Ping pingSender = new Ping();
-
-            string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            byte[] buffer = Encoding.ASCII.GetBytes(data);
-            int timeout = 20000;
-
-            PingOptions options = new PingOptions(64, true);
-
-            try
-            {
-                // Send the request.
-                PingReply reply = pingSender.Send(GetEndPoint(), timeout, buffer, options);
-
-                if (reply?.Status == IPStatus.Success)
-                {
-                    SetLastState(PingResultState.Ok);
-                }
-                else
-                {
-                    SetLastState(PingResultState.Failed);
-                    SetMessage(reply?.Status.ToString());
-                }
-            }
-            catch (PingException ex)
-            {
-                SetLastState(PingResultState.Failed);
-                SetMessage(ex.Message);
-            }
-
-            Console.WriteLine(this);
         }
     }
 }

@@ -4,8 +4,10 @@ using System.Text;
 
 namespace Pinger.Models.Enums
 {
-    public class AddressType
+    public enum MyProtocolType
     {
-        
+        Icmp,
+        Tcp,
+        Http
     }
 }
