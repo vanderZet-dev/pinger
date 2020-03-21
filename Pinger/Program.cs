@@ -19,13 +19,7 @@ namespace Pinger
             NinjectModule registrations = new NinjectRegistrations();
             var kernel = new StandardKernel(registrations);
 
-            var pingerSettings = kernel.Get<IPingerSettings>();
-            var pingerHttp = kernel.Get<IPingerHttp>();
-            var pingerIcmp = kernel.Get<IPingerIcmp>();
-            var pingerTcp = kernel.Get<IPingerTcp>();
-            var pingLogWriter = kernel.Get<IPingLogWriter>();
-
-            PingChecker pingChecker = new PingChecker(pingerSettings, pingerHttp, pingerIcmp, pingerTcp, pingLogWriter);
+            var pingChecker = kernel.Get<IPingChecker>();
             pingChecker.LoadSettings();
             pingChecker.StartAllCheckers();
 

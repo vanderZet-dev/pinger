@@ -22,6 +22,7 @@ namespace Pinger.Util
             Bind<IAddressTcp>().To<AddressTcp>();
 
             Bind<IPingerConfigReader>().To<PingerConfigReader>();
+            Bind<IPingChecker>().To<PingChecker>();
         }
     }
 }

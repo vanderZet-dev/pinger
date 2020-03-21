@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Ninject;
+using Ninject.Modules;
 using Pinger.Interfaces;
 using Pinger.Models;
+using Pinger.Util;
 
 namespace Pinger.Services
 {
-    public class PingChecker
+    public class PingChecker : IPingChecker
     {
         private IPingerSettings _pingerSettings;
 
@@ -17,17 +20,16 @@ namespace Pinger.Services
 
         private IPingLogWriter _pingLogWriter;
 
-        public PingChecker(IPingerSettings pingerSettings,
-            IPingerHttp pingerHttp,
-            IPingerIcmp pingerIcmp,
-            IPingerTcp pingerTcp,
-            IPingLogWriter pingLogWriter)
+        public PingChecker()
         {
-            _pingerSettings = pingerSettings;
-            _pingerHttp = pingerHttp;
-            _pingerIcmp = pingerIcmp;
-            _pingerTcp = pingerTcp;
-            _pingLogWriter = pingLogWriter;
+            NinjectModule registrations = new NinjectRegistrations();
+            var kernel = new StandardKernel(registrations);
+
+            _pingerSettings = kernel.Get<IPingerSettings>();
+            _pingerHttp = kernel.Get<IPingerHttp>();
+            _pingerIcmp = kernel.Get<IPingerIcmp>();
+            _pingerTcp = kernel.Get<IPingerTcp>();
+            _pingLogWriter = kernel.Get<IPingLogWriter>();
         }
 
         public void LoadSettings()
