@@ -1,38 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
+using System.Net.Sockets;
 using Pinger.Exceptions;
 using Pinger.Interfaces;
 using Pinger.Models.Enums;
 
-namespace Pinger.Models
+namespace Pinger.Services
 {
-    public class PingerHTTP : IPingerHttp
+    public class PingerTCP : IPingerTcp
     {
         public void CheckConnection(IPingerAddress pingerAddress)
         {
-            WebRequest request = WebRequest.Create(pingerAddress.GetEndPoint());
-            request.Method = "GET";
-            using (WebResponse response = request.GetResponse())
+            var ipPoint = pingerAddress.GetEndPoint();
+            using (var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
             {
                 try
                 {
-                    int statusCode = (int)((HttpWebResponse)response).StatusCode;
-                    int? validCode = ((IPingerAdressWithValidation) pingerAddress)?.GetValidStatusCode();
-                    if (!Equals(statusCode, validCode))
+                    sock.Connect(ipPoint);
+
+                    if (!sock.Connected)
                     {
                         throw new ConnectionFailedException();
                     }
-
                     pingerAddress.SetLastState(PingResultState.Ok);
                 }
-                catch (UriFormatException ex)
+                catch (FormatException ex)
                 {
                     pingerAddress.SetLastState(PingResultState.Failed);
                     pingerAddress.SetMessage(ex.Message);
                 }
                 catch (ConnectionFailedException ex)
+                {
+                    pingerAddress.SetLastState(PingResultState.Failed);
+                    pingerAddress.SetMessage(ex.Message);
+                }
+                catch (SocketException ex)
                 {
                     pingerAddress.SetLastState(PingResultState.Failed);
                     pingerAddress.SetMessage(ex.Message);

@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using Pinger.Interfaces;
 
-namespace Pinger.Models
+namespace Pinger.Services
 {
     public class PingLogWriter : IPingLogWriter
     {

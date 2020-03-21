@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Ninject;
 using Ninject.Modules;
 using Pinger.Interfaces;
-using Pinger.Models.Enums;
-using Pinger.Services;
 using Pinger.Util;
 
-namespace Pinger.Models
+namespace Pinger.Services
 {
     public class PingerSettings : IPingerSettings
     {

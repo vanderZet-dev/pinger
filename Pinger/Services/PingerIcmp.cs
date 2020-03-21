@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
+﻿using System.Net.NetworkInformation;
 using System.Text;
 using Pinger.Interfaces;
 using Pinger.Models.Enums;
 
-namespace Pinger.Models
+namespace Pinger.Services
 {
     public class PingerICMP : IPingerIcmp
     {
