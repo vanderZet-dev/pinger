@@ -1,0 +1,17 @@
+D:\VS\projects\PingerRepo\pinger\PingerTests\obj\Debug\netcoreapp2.1\PingerTests.csproj.CoreCompileInputs.cache
+D:\VS\projects\PingerRepo\pinger\PingerTests\obj\Debug\netcoreapp2.1\PingerTests.AssemblyInfoInputs.cache
+D:\VS\projects\PingerRepo\pinger\PingerTests\obj\Debug\netcoreapp2.1\PingerTests.AssemblyInfo.cs
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\PingerTests.deps.json
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\PingerTests.runtimeconfig.json
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\PingerTests.runtimeconfig.dev.json
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\PingerTests.dll
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\PingerTests.pdb
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\Pinger.dll
+D:\VS\projects\PingerRepo\pinger\PingerTests\bin\Debug\netcoreapp2.1\Pinger.pdb
+D:\VS\projects\PingerRepo\pinger\PingerTests\obj\Debug\netcoreapp2.1\PingerTests.csprojAssemblyReference.cache
+D:\VS\projects\PingerRepo\pinger\PingerTests\obj\Debug\netcoreapp2.1\PingerTests.csproj.CopyComplete
+D:\VS\projects\PingerRepo\pinger\PingerTests\obj\Debug\netcoreapp2.1\PingerTests.dll
+D:\VS\projects\PingerRepo\pinger\PingerTests\obj\Debug\netcoreapp2.1\PingerTests.pdb

@@ -15,13 +15,17 @@ namespace Pinger.Models
         protected string Message = "Н/Д";
 
         protected MyProtocolType MyProtocolType;
-        protected int CheckInterval;
-        
+        protected string CheckInterval;
 
-        protected AddressTemplate(string baseAddress, MyProtocolType myProtocolType, int checkInterval)
+        protected AddressTemplate()
+        {
+
+        }
+
+        protected AddressTemplate(string baseAddress, string myProtocolType, string checkInterval)
         {
             BaseAddress = baseAddress;
-            MyProtocolType = myProtocolType;
+            MyProtocolType = Enum.Parse<MyProtocolType>(myProtocolType);
             CheckInterval = checkInterval;
         }
 
@@ -57,7 +61,7 @@ namespace Pinger.Models
 
         public int GetCheckInterval()
         {
-            return CheckInterval*1000;
+            return Convert.ToInt32(CheckInterval)*1000;
         }
 
         public string GetProtocol()

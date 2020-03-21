@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Globalization;
 using Pinger.Interfaces;
 using Pinger.Models.Enums;
 
 namespace Pinger.Models
 {
     [Serializable]
-    public class AddressHTTP : AddressTemplate, IPingerAdressWithValidation
+    public class AddressHttp : AddressTemplate, IPingerAdressWithValidation, IAddressHttp
     {
         private string _prefix;
-        private int _validStatusCode;
+        private string _validStatusCode;
 
-        public AddressHTTP(string baseAddress, MyProtocolType myProtocolType, int checkInterval, string prefix, int validStatusCode) : base(baseAddress, myProtocolType, checkInterval)
+        public AddressHttp()
+        {
+
+        }
+
+        public AddressHttp(string baseAddress, string myProtocolType, string checkInterval, string prefix, string validStatusCode) : base(baseAddress, myProtocolType, checkInterval)
         {
             _prefix = prefix;
             _validStatusCode = validStatusCode;
@@ -29,7 +33,7 @@ namespace Pinger.Models
 
         public int GetValidStatusCode()
         {
-            return _validStatusCode;
+            return Convert.ToInt32(_validStatusCode);
         }
 
         public override string GetSaveLogData()

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using Ninject;
+using Ninject.Modules;
 using Pinger.Interfaces;
 using Pinger.Models.Enums;
+using Pinger.Services;
+using Pinger.Util;
 
 namespace Pinger.Models
 {
-    [Serializable]
     public class PingerSettings : IPingerSettings
     {
 
@@ -13,16 +16,10 @@ namespace Pinger.Models
 
         public void LoadSettings()
         {
-            _addresses = new List<IPingerAddress>
-            {
-                new AddressHTTP("ya.ru", MyProtocolType.Http, 10, "https", 200),
-                new AddressHTTP("ya.ru", MyProtocolType.Http, 15,"http", 200),
-                new AddressICMP("google.com", MyProtocolType.Icmp, 2),
-                new AddressICMP("makler.md", MyProtocolType.Icmp, 2),
-                new AddressICMP("makler12345.com", MyProtocolType.Icmp, 2),
-                new AddressTCP("127.0.0.1", MyProtocolType.Tcp, 10, "9200"),
-                new AddressTCP("127.0.0.2", MyProtocolType.Tcp, 10, "9205")
-            };
+            NinjectModule registrations = new NinjectRegistrations();
+            var kernel = new StandardKernel(registrations);
+            var pingerConfigReader = kernel.Get<IPingerConfigReader>();
+            _addresses = pingerConfigReader.Read();
         }
 
         public List<IPingerAddress> GetAddresses()

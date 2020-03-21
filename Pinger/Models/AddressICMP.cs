@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Text;
+using Pinger.Interfaces;
 using Pinger.Models.Enums;
 
 namespace Pinger.Models
 {
     [Serializable]
-    public class AddressICMP : AddressTemplate
+    public class AddressIcmp : AddressTemplate, IAddressIcmp
     {
-        
-        public AddressICMP(string baseAddress, MyProtocolType myProtocolType, int checkInterval) : base(baseAddress, myProtocolType, checkInterval)
+        public AddressIcmp(string baseAddress, string myProtocolType, string checkInterval) : base(baseAddress, myProtocolType, checkInterval)
         {
 
         }

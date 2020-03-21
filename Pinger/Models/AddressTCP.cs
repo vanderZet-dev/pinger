@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Net;
+using Pinger.Interfaces;
 using Pinger.Models.Enums;
 
 namespace Pinger.Models
 {
     [Serializable]
-    public class AddressTCP : AddressTemplate
+    public class AddressTcp : AddressTemplate, IAddressTcp
     {
         private string _port;
 
-        public AddressTCP(string baseAddress, MyProtocolType myProtocolType, int checkInterval, string port) : base(baseAddress, myProtocolType, checkInterval)
+        public AddressTcp(string baseAddress, string myProtocolType, string checkInterval, string port) : base(baseAddress, myProtocolType, checkInterval)
         {
             _port = port;
         }

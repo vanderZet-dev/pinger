@@ -7,7 +7,7 @@ using Pinger.Models.Enums;
 
 namespace Pinger.Models
 {
-    public class PingerICMP : IPinger
+    public class PingerICMP : IPingerIcmp
     {
         public void CheckConnection(IPingerAddress pingerAddress)
         {

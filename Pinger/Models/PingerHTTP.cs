@@ -8,7 +8,7 @@ using Pinger.Models.Enums;
 
 namespace Pinger.Models
 {
-    public class PingerHTTP : IPinger
+    public class PingerHTTP : IPingerHttp
     {
         public void CheckConnection(IPingerAddress pingerAddress)
         {

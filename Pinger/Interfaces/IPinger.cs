@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pinger.Interfaces
 {
-    interface IPinger
+    public interface IPinger
     {
         void CheckConnection(IPingerAddress pingerAddress);
     }

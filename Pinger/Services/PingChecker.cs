@@ -9,13 +9,26 @@ namespace Pinger.Services
 {
     public class PingChecker
     {
-        private PingerSettings _pingerSettings = new PingerSettings();
+        private IPingerSettings _pingerSettings;
 
-        private PingerHTTP _pingerHttp = new PingerHTTP();
-        private PingerICMP _pingerIcmp = new PingerICMP();
-        private PingerTCP _pingerTcp = new PingerTCP();
+        private IPingerHttp _pingerHttp;
+        private IPingerIcmp _pingerIcmp;
+        private IPingerTcp _pingerTcp;
 
-        private PingLogWriter _pingLogWriter = new PingLogWriter();
+        private IPingLogWriter _pingLogWriter;
+
+        public PingChecker(IPingerSettings pingerSettings,
+            IPingerHttp pingerHttp,
+            IPingerIcmp pingerIcmp,
+            IPingerTcp pingerTcp,
+            IPingLogWriter pingLogWriter)
+        {
+            _pingerSettings = pingerSettings;
+            _pingerHttp = pingerHttp;
+            _pingerIcmp = pingerIcmp;
+            _pingerTcp = pingerTcp;
+            _pingLogWriter = pingLogWriter;
+        }
 
         public void LoadSettings()
         {
