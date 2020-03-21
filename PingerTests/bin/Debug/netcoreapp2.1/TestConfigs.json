@@ -1,0 +1,15 @@
+[
+  {
+    "baseAddress": "127.0.0.1",
+    "myProtocolType": "Tcp",
+    "checkInterval": "10",
+    "port": "9200"
+  },
+  {
+    "baseAddress": "ya.ru",
+    "myProtocolType": "Http",
+    "checkInterval": "15",
+    "prefix": "http",
+    "validStatusCode": "200"
+  }
+]

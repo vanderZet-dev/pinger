@@ -23,6 +23,8 @@ namespace Pinger.Util
 
             Bind<IPingerConfigReader>().To<PingerConfigReader>();
             Bind<IPingChecker>().To<PingChecker>();
+            Bind<IPingerConfigWriter>().To<PingerConfigWriter>();
+            
         }
     }
 }
