@@ -8,7 +8,7 @@ namespace Pinger.Services
 {
     public class PingerHTTP : IPingerHttp
     {
-        public void CheckConnection(IPingerAddress pingerAddress)
+        public string CheckConnection(IPingerAddress pingerAddress)
         {
             WebRequest request = WebRequest.Create(pingerAddress.GetEndPoint());
             request.Method = "GET";
@@ -23,19 +23,21 @@ namespace Pinger.Services
                         throw new ConnectionFailedException();
                     }
 
-                    pingerAddress.SetLastState(PingResultState.Ok);
+                    pingerAddress.SetLastState("Ok");
                 }
                 catch (UriFormatException ex)
                 {
-                    pingerAddress.SetLastState(PingResultState.Failed);
+                    pingerAddress.SetLastState("Failed");
                     pingerAddress.SetMessage(ex.Message);
                 }
                 catch (ConnectionFailedException ex)
                 {
-                    pingerAddress.SetLastState(PingResultState.Failed);
+                    pingerAddress.SetLastState("Failed");
                     pingerAddress.SetMessage(ex.Message);
                 }
             }
+
+            return pingerAddress.GetLastState();
         }
     }
 }

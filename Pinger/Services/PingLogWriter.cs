@@ -6,8 +6,10 @@ namespace Pinger.Services
 {
     public class PingLogWriter : IPingLogWriter
     {
-        public void SaveLog(IPingerLogSaveble pingerAddress)
+        public string SaveLog(IPingerLogSaveble pingerAddress)
         {
+            string savedData = pingerAddress.GetSaveLogData();
+
             string directory = "PingerLogs";
             Directory.CreateDirectory(directory);
             string fileName = pingerAddress?.GetSaveLogName();
@@ -18,8 +20,10 @@ namespace Pinger.Services
             string savePath = directory + "/" + fileName + ".txt";
             using (StreamWriter w = File.AppendText(savePath))
             {
-                w.WriteLine(pingerAddress.GetSaveLogData());
+                w.WriteLine(savedData);
             }
+
+            return savedData;
         }
     }
 }

@@ -34,9 +34,9 @@ namespace Pinger.Models
             return BaseAddress;
         }
 
-        public void SetLastState(PingResultState state)
+        public void SetLastState(string state)
         {
-            LastState = state;
+            LastState = Enum.Parse<PingResultState>(state);
         }
 
         public void SetMessage(string message)

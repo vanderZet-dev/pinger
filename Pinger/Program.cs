@@ -20,7 +20,6 @@ namespace Pinger
             var kernel = new StandardKernel(registrations);
 
             var pingChecker = kernel.Get<IPingChecker>();
-            pingChecker.LoadSettings();
             pingChecker.StartAllCheckers();
 
             Console.ReadKey();

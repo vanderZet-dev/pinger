@@ -6,6 +6,6 @@ namespace Pinger.Interfaces
 {
     public interface IPinger
     {
-        void CheckConnection(IPingerAddress pingerAddress);
+        string CheckConnection(IPingerAddress pingerAddress);
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Pinger.Interfaces
 {
-    public interface IPingerAddress
+    public interface IPingerAddress : IPingerLogSaveble
     {
         dynamic GetEndPoint();
 
-        void SetLastState(PingResultState state);
+        void SetLastState(string state);
         string GetLastState();
 
         void SetMessage(string message);

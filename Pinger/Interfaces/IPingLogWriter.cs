@@ -2,6 +2,6 @@
 {
     public interface IPingLogWriter
     {
-        void SaveLog(IPingerLogSaveble pingerAddress);
+        string SaveLog(IPingerLogSaveble pingerAddress);
     }
 }

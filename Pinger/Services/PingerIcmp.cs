@@ -7,7 +7,7 @@ namespace Pinger.Services
 {
     public class PingerICMP : IPingerIcmp
     {
-        public void CheckConnection(IPingerAddress pingerAddress)
+        public string CheckConnection(IPingerAddress pingerAddress)
         {
             Ping pingSender = new Ping();
 
@@ -24,19 +24,21 @@ namespace Pinger.Services
 
                 if (reply?.Status == IPStatus.Success)
                 {
-                    pingerAddress.SetLastState(PingResultState.Ok);
+                    pingerAddress.SetLastState("Ok");
                 }
                 else
                 {
-                    pingerAddress.SetLastState(PingResultState.Failed);
+                    pingerAddress.SetLastState("Failed");
                     pingerAddress.SetMessage(reply?.Status.ToString());
                 }
             }
             catch (PingException ex)
             {
-                pingerAddress.SetLastState(PingResultState.Failed);
+                pingerAddress.SetLastState("Failed");
                 pingerAddress.SetMessage(ex.Message);
             }
+
+            return pingerAddress.GetLastState();
         }
     }
 }

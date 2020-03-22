@@ -2,7 +2,6 @@
 {
     public interface IPingChecker
     {
-        void LoadSettings();
         void StartAllCheckers();
     }
 }

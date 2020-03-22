@@ -8,7 +8,7 @@ namespace Pinger.Services
 {
     public class PingerTCP : IPingerTcp
     {
-        public void CheckConnection(IPingerAddress pingerAddress)
+        public string CheckConnection(IPingerAddress pingerAddress)
         {
             var ipPoint = pingerAddress.GetEndPoint();
             using (var sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
@@ -21,24 +21,26 @@ namespace Pinger.Services
                     {
                         throw new ConnectionFailedException();
                     }
-                    pingerAddress.SetLastState(PingResultState.Ok);
+                    pingerAddress.SetLastState("Ok");
                 }
                 catch (FormatException ex)
                 {
-                    pingerAddress.SetLastState(PingResultState.Failed);
+                    pingerAddress.SetLastState("Failed");
                     pingerAddress.SetMessage(ex.Message);
                 }
                 catch (ConnectionFailedException ex)
                 {
-                    pingerAddress.SetLastState(PingResultState.Failed);
+                    pingerAddress.SetLastState("Failed");
                     pingerAddress.SetMessage(ex.Message);
                 }
                 catch (SocketException ex)
                 {
-                    pingerAddress.SetLastState(PingResultState.Failed);
+                    pingerAddress.SetLastState("Failed");
                     pingerAddress.SetMessage(ex.Message);
                 }
             }
+
+            return pingerAddress.GetLastState();
         }
     }
 }

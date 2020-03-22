@@ -32,13 +32,10 @@ namespace Pinger.Services
             _pingLogWriter = kernel.Get<IPingLogWriter>();
         }
 
-        public void LoadSettings()
-        {
-            _pingerSettings.LoadSettings();
-        }
-
         public void StartAllCheckers()
         {
+            _pingerSettings.LoadSettings();
+
             List<Task> tasks = new List<Task>();
 
             foreach (var address in _pingerSettings.GetAddresses())

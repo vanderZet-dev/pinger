@@ -25,6 +25,9 @@ namespace Pinger.Util
             Bind<IPingChecker>().To<PingChecker>();
             Bind<IPingerConfigWriter>().To<PingerConfigWriter>();
             
+            Bind<IPingerLogSaveble>().To<AddressTemplate>();
+
+
         }
     }
 }
