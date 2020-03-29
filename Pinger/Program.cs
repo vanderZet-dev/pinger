@@ -23,6 +23,9 @@ namespace Pinger
             pingChecker.StartAllCheckers();
 
             Console.ReadKey();
+            pingChecker.StopAllCheckers();
+
+            Console.ReadKey();
         }
     }
 }

@@ -7,6 +7,7 @@ using Ninject.Modules;
 using Pinger.Interfaces;
 using Pinger.Models;
 using Pinger.Util;
+using System.Linq;
 
 namespace Pinger.Services
 {
@@ -19,6 +20,11 @@ namespace Pinger.Services
         private IPingerTcp _pingerTcp;
 
         private IPingLogWriter _pingLogWriter;
+
+        private List<Task> tasks;
+        private CancellationTokenSource cancelTokenSource;
+        private CancellationToken token;
+        private int TasksCanceledCount = 0;
 
         public PingChecker()
         {
@@ -34,9 +40,12 @@ namespace Pinger.Services
 
         public void StartAllCheckers()
         {
+            cancelTokenSource = new CancellationTokenSource();
+            token = cancelTokenSource.Token;                                
+
             _pingerSettings.LoadSettings();
 
-            List<Task> tasks = new List<Task>();
+            tasks = new List<Task>();
 
             foreach (var address in _pingerSettings.GetAddresses())
             {
@@ -44,6 +53,14 @@ namespace Pinger.Services
                 {
                     while (true)
                     {
+                        if (token.IsCancellationRequested)
+                        {
+                            Console.WriteLine("Операция завершена: " + address.GetEndPoint());
+                            TasksCanceledCount++;
+                            CheckForClose();
+                            return;
+                        }
+
                         switch (address.GetProtocol())
                         {
                             case "Http":
@@ -58,14 +75,40 @@ namespace Pinger.Services
                         }
                         Console.WriteLine(((IPingerLogSaveble)address).GetSaveLogData());
                         _pingLogWriter.SaveLog(address as IPingerLogSaveble);
+
+                        if (token.IsCancellationRequested)
+                        {
+                            Console.WriteLine("Операция завершена: " + address.GetEndPoint());
+                            TasksCanceledCount++;
+                            CheckForClose();
+                            return;
+                        }
                         Thread.Sleep(address.GetCheckInterval());
                     }
                 }));
             }
 
+
             foreach (var task in tasks)
             {
                 task.Start();
+            }            
+        }
+
+        public void StopAllCheckers()
+        {
+            cancelTokenSource.Cancel();
+        }
+
+        private void CheckForClose()
+        {
+            Console.WriteLine($"Завершено {TasksCanceledCount} из {tasks.Count}");
+            if (tasks.Count == TasksCanceledCount)
+            {
+                Console.WriteLine("Все задачи завершены.");
+                Console.WriteLine("Приложение закрывается ...");
+
+                Environment.Exit(0);
             }
         }
     }

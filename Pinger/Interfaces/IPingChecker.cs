@@ -3,5 +3,6 @@
     public interface IPingChecker
     {
         void StartAllCheckers();
+        void StopAllCheckers();
     }
 }
