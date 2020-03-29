@@ -1,4 +1,5 @@
-﻿using Ninject.Modules;
+﻿using Ninject;
+using Ninject.Modules;
 using Pinger.Interfaces;
 using Pinger.Models;
 using Pinger.Services;
@@ -26,8 +27,6 @@ namespace Pinger.Util
             Bind<IPingerConfigWriter>().To<PingerConfigWriter>();
             
             Bind<IPingerLogSaveble>().To<AddressTemplate>();
-
-
         }
     }
 }

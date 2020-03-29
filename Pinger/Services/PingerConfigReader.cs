@@ -16,13 +16,21 @@ namespace Pinger.Services
 {
     public class PingerConfigReader : IPingerConfigReader
     {
-        private string _filePath = "Addresses.json";
+        private string _filePath = "Addresses.json";        
+
+        private IKernel _kernel;
+
+        private IPingerConfigWriter _pingerConfigWriter;
+
+        public PingerConfigReader(IKernel kernel,
+                                  IPingerConfigWriter pingerConfigWriter)
+        {
+            _kernel = kernel;
+            _pingerConfigWriter = pingerConfigWriter;            
+        }
 
         public List<IPingerAddress> Read()
         {
-            NinjectModule registrations = new NinjectRegistrations();
-            var kernel = new StandardKernel(registrations);
-
             var addresses = new List<IPingerAddress>();
 
             try
@@ -42,7 +50,7 @@ namespace Pinger.Services
                             {
                                 case "Http":
                                     addresses.Add(
-                                            kernel.Get<IAddressHttp>(
+                                            _kernel.Get<IAddressHttp>(
                                                 new ConstructorArgument("baseAddress", Convert.ToString(config.baseAddress)),
                                                 new ConstructorArgument("myProtocolType", Convert.ToString(config.myProtocolType)),
                                                 new ConstructorArgument("checkInterval", Convert.ToString(config.checkInterval)),
@@ -53,7 +61,7 @@ namespace Pinger.Services
                                     break;
                                 case "Tcp":
                                     addresses.Add(
-                                        kernel.Get<IAddressTcp>(
+                                        _kernel.Get<IAddressTcp>(
                                             new ConstructorArgument("baseAddress", Convert.ToString(config.baseAddress)),
                                             new ConstructorArgument("myProtocolType", Convert.ToString(config.myProtocolType)),
                                             new ConstructorArgument("checkInterval", Convert.ToString(config.checkInterval)),
@@ -63,7 +71,7 @@ namespace Pinger.Services
                                     break;
                                 case "Icmp":
                                     addresses.Add(
-                                        kernel.Get<IAddressIcmp>(
+                                        _kernel.Get<IAddressIcmp>(
                                             new ConstructorArgument("baseAddress", Convert.ToString(config.baseAddress)),
                                             new ConstructorArgument("myProtocolType", Convert.ToString(config.myProtocolType)),
                                             new ConstructorArgument("checkInterval", Convert.ToString(config.checkInterval))
@@ -91,19 +99,13 @@ namespace Pinger.Services
             {
                 try
                 {
-                    kernel.Get<IPingerConfigWriter>().Write(_filePath);
+                    _pingerConfigWriter.Write(_filePath);
                     addresses = Read();
                 }
                 catch (PingerConfigFileAlreadyExistsException e)
                 {
                     Console.WriteLine(e);
                 }
-            }
-            
-
-            if (addresses.Count <= 0)
-            {
-                
             }
 
             return addresses;

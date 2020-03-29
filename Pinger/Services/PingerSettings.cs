@@ -8,15 +8,18 @@ namespace Pinger.Services
 {
     public class PingerSettings : IPingerSettings
     {
+        private IPingerConfigReader _pingerConfigReader;
 
-        private List<IPingerAddress> _addresses;
+        private List<IPingerAddress> _addresses;        
+
+        public PingerSettings(IPingerConfigReader pingerConfigReader)
+        {
+            _pingerConfigReader = pingerConfigReader;
+        }
 
         public void LoadSettings()
-        {
-            NinjectModule registrations = new NinjectRegistrations();
-            var kernel = new StandardKernel(registrations);
-            var pingerConfigReader = kernel.Get<IPingerConfigReader>();
-            _addresses = pingerConfigReader.Read();
+        {                  
+            _addresses = _pingerConfigReader.Read();
         }
 
         public List<IPingerAddress> GetAddresses()
